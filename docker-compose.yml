@@ -1,0 +1,79 @@
+version: '3'
+
+networks: 
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+volumes: 
+  mysql: 
+    driver: ${VOLUMES_DRIVER}
+  mongo:
+    driver: ${VOLUMES_DRIVER}
+  redis:
+    driver: ${VOLUMES_DRIVER}
+
+services: 
+  php:
+    build: ./php
+    volumes: 
+      - ${WORKER_DIR}:/var/www
+    ports: 
+      - 9100:9000
+      #- 9111:9001
+    depends_on: 
+      - mysql
+      - redis
+      - mongo
+    extra_hosts: 
+        # 往php 容器加入docker ip地址 解决本地curl调用 
+      - "www.my.com:${DOCKER_HOST_IP_MAC}"
+    networks: 
+      - backend
+
+  nginx:
+    build: ./nginx
+    volumes: 
+      - ${WORKER_DIR}:/var/www
+      - ./logs/nginx:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports: 
+      - 80:80
+    depends_on: 
+      - php
+    networks: 
+      - frontend
+      - backend
+
+  mysql:
+    build: ./mysql
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+    volumes: 
+      - ${DATA_PATH}/mysql:/var/lib/mysql
+    ports: 
+      - 3310:3306
+    networks: 
+      - backend
+  
+  mongo:
+    build: ./mongo
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports: 
+      - 27010:27017
+    volumes: 
+      - ${DATA_PATH}/mongo:/data/db
+    networks: 
+      - backend
+  
+  redis:
+    build: ./redis
+    volumes: 
+      - ${DATA_PATH}/redis:/data
+    ports: 
+      - 6310:6379
+    networks: 
+      - backend
