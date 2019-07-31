@@ -27,7 +27,7 @@
 # FROM 指定基础镜像
 FROM 镜像
 
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 
 # RUN 执行
 RUN <命令>
@@ -270,3 +270,16 @@ services:
 - [Docker — 从入门到实践](https://docker_practice.gitee.io/)
 - [laradock](https://github.com/laradock/laradock)
 - [Docker在PHP项目开发环境中的应用](https://avnpc.com/pages/build-php-develop-env-by-docker)
+
+##五、后续（填坑步骤）
+
+- 1.vscode的xdebug断点调试问题
+- 之前一直没注意把9001端口暴露出来并映射为9002,导致一直命中不了，后来想了想，根本用不着。
+
+- 2.php和nginx独立后，php中使用curl函数无法访问
+
+- curl访问百度没有问题
+- curl localhost 拒绝连接
+- curl www.my.com(本地域名) 拒绝连接
+- 原因是 nginx和php是隔离的,代码执行curl是执行php环境这边的,然后这边的www.my.com 当然访问不到,所以把www.my.com 的真实ip也就是docker容器的ip加入
+- linux 172.17.0.2；macOS 192.168.65.2
