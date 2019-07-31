@@ -11,8 +11,10 @@ RUN apt-get update \
         libmcrypt-dev \
         libpng-dev \
         libxml2-dev\
+        openssl \
+        libssl-dev \
         && docker-php-ext-install -j$(nproc) iconv json bcmath fileinfo mysqli pdo pdo_mysql xml ctype sockets\
-        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-mongodb-ssl \
         && docker-php-ext-install -j$(nproc) gd \
         # 更新pecl源
         && pecl channel-update https://pecl.php.net/channel.xml 
@@ -45,6 +47,22 @@ RUN pecl install /home/mongodb-1.5.3.tgz && \
 # opcache
 RUN docker-php-ext-install opcache
 #COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+#tideways
+COPY php-xhprof-extension  /home/php-xhprof-extension
+RUN     (\
+        cd /home/php-xhprof-extension  \
+        && phpize \
+        && ./configure \
+        && make -j$(nproc) \
+        && make install \
+        ) \
+        && docker-php-ext-enable tideways_xhprof\
+        && rm -r /home/php-xhprof-extension
+
+
+
+
 
 # php配置文件
 ADD php.ini         /usr/local/etc/php/php.ini

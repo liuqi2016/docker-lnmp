@@ -136,3 +136,13 @@ docker-compose logs mongo
 - [Docker — 从入门到实践](https://docker_practice.gitee.io/)
 - [laradock](https://github.com/laradock/laradock)
 - [Docker在PHP项目开发环境中的应用](https://avnpc.com/pages/build-php-develop-env-by-docker)
+
+## 十、Tideways和xhgui监控
+1.创建mongodb数据库、并优化索引
+mongo
+ use xhprof
+ db.results.ensureIndex( { 'meta.SERVER.REQUEST_TIME' : -1 } )
+ db.results.ensureIndex( { 'profile.main().wt' : -1 } )
+ db.results.ensureIndex( { 'profile.main().mu' : -1 } )
+ db.results.ensureIndex( { 'profile.main().cpu' : -1 } )
+ db.results.ensureIndex( { 'meta.url' : 1 } )
