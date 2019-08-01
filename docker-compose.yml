@@ -23,7 +23,7 @@ services:
 
     ports: 
       - 9100:9000
-      #- 9111:9001
+      # - 9510:9510
     depends_on: 
       - mysql
       - redis
@@ -37,7 +37,7 @@ services:
   nginx:
     build: ./nginx
     volumes: 
-      # - ${WORKER_DIR}:/var/www
+      - ${WORKER_DIR}:/var/www
       - ./logs/nginx:/var/log/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports: 

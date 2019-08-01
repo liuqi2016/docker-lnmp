@@ -33,10 +33,10 @@ RUN pecl install /home/xdebug-2.8.0beta1.tgz && \
         rm /home/xdebug-2.8.0beta1.tgz
 
 # swoole
-COPY swoole-4.2.10.tgz /home
-RUN pecl install /home/swoole-4.2.10.tgz && \
+COPY swoole-4.4.2.tgz /home
+RUN pecl install /home/swoole-4.4.2.tgz && \
         docker-php-ext-enable swoole && \
-        rm /home/swoole-4.2.10.tgz
+        rm /home/swoole-4.4.2.tgz
 
 # mongodb
 COPY mongodb-1.5.3.tgz /home
@@ -65,10 +65,10 @@ RUN     (\
 
 
 # php配置文件
-ADD php.ini         /usr/local/etc/php/php.ini
-ADD php-fpm.conf    /usr/local/etc/php-fpm.conf
-ADD php-fpm.d    /usr/local/etc/php-fpm.d
-ADD conf.d       /usr/local/etc/php/conf.d
+# ADD php.ini         /usr/local/etc/php/php.ini
+# ADD php-fpm.conf    /usr/local/etc/php-fpm.conf
+# ADD php-fpm.d    /usr/local/etc/php-fpm.d
+# ADD conf.d       /usr/local/etc/php/conf.d
 USER root
 
 # 清理
