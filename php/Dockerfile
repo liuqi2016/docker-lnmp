@@ -57,11 +57,20 @@ RUN     (\
         && make -j$(nproc) \
         && make install \
         ) \
-        && docker-php-ext-enable tideways_xhprof\
+        && docker-php-ext-enable tideways_xhprof \
         && rm -r /home/php-xhprof-extension
 
+#php-cp
+# COPY php-cp-master /home/php-cp-master
 
-
+# RUN     (\
+#         cd /home/php-cp-master \
+#         && phpize && ./configure  &&   make clean && make  && make install \
+#         )\
+#         && docker-php-ext-enable connect_pool \
+#         && mkdir -m 755 /var/log/php-connection-pool \
+#         && chmod +x ./pool_server \
+#         && cp ./pool_server /usr/local/bin/pool_server
 
 
 # php配置文件

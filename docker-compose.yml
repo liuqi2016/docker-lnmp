@@ -1,4 +1,4 @@
-version: '3'
+version: "2"
 
 networks: 
   frontend:
@@ -21,8 +21,8 @@ services:
       - ${WORKER_DIR}:/var/www
       - ./php/etc:/usr/local/etc
 
-    ports: 
-      - 9100:9000
+    # ports: 
+      # - 9100:9000
       # - 9510:9510
     depends_on: 
       - mysql
@@ -30,7 +30,7 @@ services:
       - mongo
     extra_hosts: 
         # 往php 容器加入docker ip地址 解决本地curl调用 
-      - "www.my.com:${DOCKER_HOST_IP_MAC}"
+      - "www.my.com:${DOCKER_HOST_IP}"
     networks: 
       - backend
 
@@ -40,8 +40,9 @@ services:
       - ${WORKER_DIR}:/var/www
       - ./logs/nginx:/var/log/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports: 
-      - 80:80
+      - 8000:80
     depends_on: 
       - php
     networks: 
@@ -54,6 +55,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     volumes: 
       - ${DATA_PATH}/mysql:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
     ports: 
       - 3310:3306
     networks: 
