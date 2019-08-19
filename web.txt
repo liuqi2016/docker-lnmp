@@ -1,4 +1,4 @@
-http://www.my.com:8000
-http://www.my.com:8000/forum.php
-http://www.my.com:8000/forum.php?mod=forumdisplay&fid=2
-http://www.my.com:8000/forum.php?mod=viewthread&tid=1&extra=page%3D1
+http://www.my.com
+http://www.my.com/forum.php
+http://www.my.com/forum.php?mod=forumdisplay&fid=2
+http://www.my.com/forum.php?mod=viewthread&tid=1&extra=page%3D1
