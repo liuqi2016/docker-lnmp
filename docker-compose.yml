@@ -61,17 +61,17 @@ services:
     networks: 
       - backend
 
-  mysql2:
-    build: ./mysql
-    environment: 
-      - MYSQL_ROOT_PASSWORD=root
-    volumes: 
-      - ${DATA_PATH}/mysql2:/var/lib/mysql
-      - ./mysql/conf2.d:/etc/mysql/conf.d
-    ports: 
-      - 3311:3306
-    networks: 
-      - backend
+  # mysql2:
+  #   build: ./mysql
+  #   environment: 
+  #     - MYSQL_ROOT_PASSWORD=root
+  #   volumes: 
+  #     - ${DATA_PATH}/mysql2:/var/lib/mysql
+  #     - ./mysql/conf2.d:/etc/mysql/conf.d
+  #   ports: 
+  #     - 3311:3306
+  #   networks: 
+  #     - backend
   mongo:
     build: ./mongo
     environment: 
