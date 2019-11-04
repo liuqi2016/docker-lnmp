@@ -6,6 +6,7 @@ ADD sources.list /etc/apt/sources.list
 RUN apt-get update \
         && apt-get install -y \
         vim\
+        supervisor\
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
