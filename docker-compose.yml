@@ -28,9 +28,9 @@ services:
       - mysql
       - redis
       - mongo
-    extra_hosts: 
+    #extra_hosts: 
         # 往php 容器加入docker ip地址 解决本地curl调用 
-      #- "www.my.com:${DOCKER_HOST_IP}"
+     #   - "www.my.com:${DOCKER_HOST_IP}"
     networks: 
       - backend
 
