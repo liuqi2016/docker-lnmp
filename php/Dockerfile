@@ -88,6 +88,8 @@ RUN apt-get clean && \
 
 RUN usermod -u 1000 www-data
 
+RUN mkdir -p /var/logs/php/slow.log
+
 WORKDIR /var/www
 
 CMD ["php-fpm"]
