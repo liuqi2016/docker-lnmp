@@ -5,18 +5,18 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 ADD sources.list /etc/apt/sources.list
 RUN apt-get update \
         && apt-get install -y \
-        vim\
-        supervisor\
+        vim \
+        supervisor \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng-dev \
-        libxml2-dev\
+        libxml2-dev \
         openssl \
         libssl-dev \
-        && docker-php-ext-install -j$(nproc) iconv json bcmath fileinfo mysqli pdo pdo_mysql xml ctype sockets\
+        && docker-php-ext-install -j$(nproc)  gd iconv json bcmath fileinfo mysqli pdo pdo_mysql xml ctype sockets  \
         && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-mongodb-ssl \
-        && docker-php-ext-install -j$(nproc) gd \
+        && docker-php-ext-install -j$(nproc) pcntl
         # 更新pecl源
         && pecl channel-update https://pecl.php.net/channel.xml 
 
@@ -34,10 +34,12 @@ RUN pecl install /home/xdebug-2.8.0beta1.tgz && \
         rm /home/xdebug-2.8.0beta1.tgz
 
 # swoole
-COPY swoole-4.4.2.tgz /home
-RUN pecl install /home/swoole-4.4.2.tgz && \
+COPY swoole-4.4.12.tgz /home
+RUN pecl install /home/swoole-4.4.12.tgz && \
         docker-php-ext-enable swoole && \
-        rm /home/swoole-4.4.2.tgz
+        rm /home/swoole-4.4.12.tgz
+# RUN pecl install swoole
+
 
 # mongodb
 COPY mongodb-1.5.3.tgz /home
@@ -93,6 +95,7 @@ RUN mkdir -p /var/logs/php/slow.log
 WORKDIR /var/www
 
 CMD ["php-fpm"]
+
 
 EXPOSE 9000
 #EXPOSE 9001
